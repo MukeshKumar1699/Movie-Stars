@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".fragments.SearchFragment">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/sv_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appBG"
+        android:backgroundTint="@color/white"
+        app:iconifiedByDefault="false"
+        app:queryHint="Enter the Movie" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/sv_search" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/sv_search"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        app:lottie_autoPlay="false" />
+
+
+</RelativeLayout>
