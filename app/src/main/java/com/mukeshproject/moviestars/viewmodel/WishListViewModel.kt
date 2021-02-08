@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.mukeshproject.moviestars.database.WishList
 import com.mukeshproject.moviestars.database.WishListDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
 class WishListViewModel(private val context: Context) : ViewModel() {
 
@@ -13,10 +16,13 @@ class WishListViewModel(private val context: Context) : ViewModel() {
             .wishListDao.getAllWishlist()
     }
 
-    fun deleteWishList(wishList: WishList) {
+    fun deleteFromDatabase(wishList: WishList) {
 
-        Thread {
-            WishListDatabase.getInstance(context).wishListDao.deleleWishList(wishList)
-        }.start()
+        CoroutineScope(IO).launch {
+            WishListDatabase.getInstance(context).wishListDao
+                .deleleWishList(wishList)
+        }
     }
+
+
 }

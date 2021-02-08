@@ -3,6 +3,7 @@ package com.mukeshproject.moviestars.viewholder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.mukeshproject.moviestars.R
 import com.mukeshproject.moviestars.database.WishList
 import com.mukeshproject.moviestars.listenters.ItemClickListener
 import kotlinx.android.synthetic.main.item_layout.view.*
@@ -17,6 +18,15 @@ class WishListViewHolder(private val view: View, var listener: ItemClickListener
             Glide.with(iv_movieImage).load("https://image.tmdb.org/t/p/original/" + results.image)
                 .into(iv_movieImage)
 
+            addToWishlist.setImageResource(R.drawable.ic_delete)
+
+
+            addToWishlist.setOnClickListener {
+
+                addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
+                itemClickListener.addToWishList(results, true)
+
+            }
         }
 
     }

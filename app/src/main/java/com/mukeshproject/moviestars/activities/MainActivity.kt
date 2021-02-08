@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -78,9 +77,12 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setMessage("Internet Is Required")
             .setCancelable(false)
-            .setNeutralButton(
+            .setNegativeButton(
                 "OK"
-            ) { dialog, id -> dialog.cancel() }
+            ) { dialog, id ->
+                val intent = Intent(this@MainActivity, WishListActivity::class.java)
+                startActivity(intent)
+            }
 
         val alert = alertDialogBuilder.create()
         alert.show()
@@ -112,17 +114,15 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
     }
 
     private fun user() {
-//        iv_user.setOnClickListener {
-//            iv_user.s
-//        }
+
     }
 
     private fun wishList() {
 
-//        ib_wishList.setOnClickListener {
-//            val intent = Intent(this@MainActivity, WishListActivity::class.java)
-//            startActivity(intent)
-//        }
+        ib_wishList.setOnClickListener {
+            val intent = Intent(this@MainActivity, WishListActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -153,12 +153,6 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
                 }
 
                 is PopularUIModel.Failure -> {
-
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Error message ${it.error}",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     progressMain.visibility = View.GONE
                 }
             }
@@ -167,14 +161,13 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
             when (it) {
 
                 is TopRatedUIModel.Success -> {
+                    progressMain.visibility = View.GONE
+
                     topRatedAdapter.updateDataList(it.TopRatedList)
                 }
                 is TopRatedUIModel.Failure -> {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Error message ${it.error}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    progressMain.visibility = View.GONE
+
                 }
             }
         })
@@ -217,8 +210,17 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
         startActivity(intent)
     }
 
-    override fun onDeleteClicked(wishList: WishList) {
-        TODO("Not yet implemented")
+
+    override fun addToWishList(data: Any, isAdded: Boolean) {
+        if (isAdded) {
+            popularViewModel.deleteFromDatabase(data as WishList, this)
+            topRatedViewModel.deleteFromDatabase(data, this)
+        } else {
+            popularViewModel.insertToDatabase(data as ResultsItem, this)
+            topRatedViewModel.insertToDatabase(data, this)
+
+        }
+
     }
 
 

@@ -24,6 +24,7 @@ class WishListActivity : AppCompatActivity(), ItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wish_list)
 
+        back()
         wishListViewModel = WishListViewModelFactory(this).create(WishListViewModel::class.java)
 
         wishListViewModel.fetchDataFromDB().observe(this, {
@@ -35,11 +36,19 @@ class WishListActivity : AppCompatActivity(), ItemClickListener {
         setRecyclerAdapter()
     }
 
+    private fun back() {
+
+        iv_backWishlist.setOnClickListener {
+            val intent = Intent(this@WishListActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
     private fun setRecyclerAdapter() {
 
         wishListAdapter = WishListAdapter(wishList, this)
         var layoutManager =
-            GridLayoutManager(this@WishListActivity, 1, RecyclerView.HORIZONTAL, false)
+            GridLayoutManager(this@WishListActivity, 2, RecyclerView.VERTICAL, false)
 
         recyclerViewWishList.layoutManager = layoutManager
         recyclerViewWishList.adapter = wishListAdapter
@@ -51,8 +60,8 @@ class WishListActivity : AppCompatActivity(), ItemClickListener {
         startActivity(intent)
     }
 
-    override fun onDeleteClicked(wishList: WishList) {
+    override fun addToWishList(data: Any, isAdded: Boolean) {
+        wishListViewModel.deleteFromDatabase(data as WishList)
     }
-
 
 }

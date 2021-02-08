@@ -126,8 +126,15 @@ class SearchFragment : Fragment(), ItemClickListener {
         startActivity(intent)
     }
 
-    override fun onDeleteClicked(wishList: WishList) {
-        TODO("Not yet implemented")
+
+    override fun addToWishList(data: Any, isAdded: Boolean) {
+
+        if (isAdded) {
+            searchViewModel.deleteFromDatabase(data as WishList, requireContext())
+        } else {
+            searchViewModel.insertToDatabase(data as ResultsItem, requireContext())
+
+        }
     }
 
 

@@ -15,6 +15,8 @@ class TopRatedViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
         var isClicked = false
 
         view.apply {
+
+            addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
             Glide.with(iv_movieImage)
                 .load("https://image.tmdb.org/t/p/original/" + results.posterPath)
                 .into(iv_movieImage)

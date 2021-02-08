@@ -15,7 +15,6 @@ abstract class WishListDatabase : RoomDatabase() {
         private var INSTANCE: WishListDatabase? = null
 
         fun getInstance(context: Context): WishListDatabase {
-            synchronized(this) {
 
                 var instance = INSTANCE
                 if (instance == null) {
@@ -25,7 +24,6 @@ abstract class WishListDatabase : RoomDatabase() {
                     INSTANCE = instance
                 }
                 return instance
-            }
         }
     }
 }

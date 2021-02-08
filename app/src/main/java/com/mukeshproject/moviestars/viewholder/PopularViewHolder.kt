@@ -15,6 +15,8 @@ class PopularViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
         var isClicked = false
 
         view.apply {
+
+            addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
             Glide.with(iv_movieImage)
                 .load("https://image.tmdb.org/t/p/original/" + results.posterPath)
                 .into(iv_movieImage)
@@ -22,16 +24,14 @@ class PopularViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
             addToWishlist.setOnClickListener {
 
                 if (isClicked) {
-                    addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
                     isClicked = false
-
-                    Thread {
-
-                    }.start()
-
+                    addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
+                    itemClickListener.addToWishList(results, true)
                 } else {
-                    addToWishlist.setImageResource(R.drawable.ic_bookmark_added)
                     isClicked = true
+                    addToWishlist.setImageResource(R.drawable.ic_bookmark_added)
+                    itemClickListener.addToWishList(results, false)
+
                 }
             }
             iv_movieImage.setOnClickListener {
