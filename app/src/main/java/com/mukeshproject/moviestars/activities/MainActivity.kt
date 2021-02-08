@@ -1,9 +1,16 @@
 package com.mukeshproject.moviestars.activities
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -36,13 +43,19 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
     private val popularList = emptyList<ResultsItem>()
     private val topRatedList = emptyList<ResultsItem>()
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!checkInternet(applicationContext)) {
+                showInternetRequired()
+            }
+        }
         search()
         wishList()
-
+        user()
         popularViewModel = ViewModelProvider(this).get(PopularViewModel::class.java)
         topRatedViewModel = ViewModelProvider(this).get(TopRatedViewModel::class.java)
 
@@ -59,12 +72,57 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun showInternetRequired() {
+
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage("Internet Is Required")
+            .setCancelable(false)
+            .setNeutralButton(
+                "OK"
+            ) { dialog, id -> dialog.cancel() }
+
+        val alert = alertDialogBuilder.create()
+        alert.show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun checkInternet(context: Context): Boolean {
+
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+
+    }
+
+    private fun user() {
+//        iv_user.setOnClickListener {
+//            iv_user.s
+//        }
+    }
+
     private fun wishList() {
 
-        ib_wishList.setOnClickListener {
-            val intent = Intent(this@MainActivity, WishListActivity::class.java)
-            startActivity(intent)
-        }
+//        ib_wishList.setOnClickListener {
+//            val intent = Intent(this@MainActivity, WishListActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 
 

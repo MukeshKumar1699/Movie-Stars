@@ -1,81 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MovieDetailsActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/ToolbarMoviesDetails"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/appBG"
-        tools:ignore="MissingConstraints">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_backMoviesDetails"
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/ToolbarMoviesDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/appBG"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/iv_backMoviesDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:id="@+id/movieNameMovieDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageMoviesDetails"
+                android:padding="@dimen/dp_20"
+                android:text="Movie Name"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_20"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/imageMoviesDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_back" />
+            android:layout_below="@id/ToolbarMoviesDetails">
 
-    </androidx.appcompat.widget.Toolbar>
+            <ImageView
+                android:id="@+id/iv_backdropMovieDetails"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_250"
+                android:scaleType="centerCrop" />
 
-    <RelativeLayout
-        android:id="@+id/imageMoviesDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ToolbarMoviesDetails">
+            <ImageView
+                android:id="@+id/iv_posterMovieDetails"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_150"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_20"
+                android:elevation="@dimen/dp_20" />
 
-        <ImageView
-            android:id="@+id/iv_backdropMovieDetails"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_250"
-            android:scaleType="centerCrop" />
 
-        <ImageView
-            android:id="@+id/iv_posterMovieDetails"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_150"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_20"
-            android:elevation="@dimen/dp_20" />
+        </RelativeLayout>
 
+        <Button
+            android:id="@+id/btn_playTrailer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageMoviesDetails"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:drawableLeft="@drawable/ic_play"
+            android:padding="@dimen/dp_15"
+            android:text="Play Trailer"
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
+
+        <TextView
+
+            android:id="@+id/overViewMoviesDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_playTrailer"
+            android:padding="@dimen/sp_10"
+            android:text="Overview" />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/movieNameMovieDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageMoviesDetails"
-        android:padding="@dimen/dp_20"
-        android:text="Movie Name"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/sp_20"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btn_playTrailer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/movieNameMovieDetails"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:drawableLeft="@drawable/ic_play"
-        android:padding="@dimen/dp_15"
-        android:text="Play Trailer"
-        android:textAlignment="center"
-        android:textColor="@android:color/white" />
-
-    <TextView
-
-        android:id="@+id/overViewMoviesDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_playTrailer"
-        android:padding="@dimen/sp_10"
-        android:text="Overview" />
-
-
-</RelativeLayout>
+</ScrollView>
