@@ -24,16 +24,14 @@ class TopRatedViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
             addToWishlist.setOnClickListener {
 
                 if (isClicked) {
-                    addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
                     isClicked = false
-
-                    Thread {
-
-                    }.start()
-
+                    addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
+                    itemClickListener.addToWishList(results, true, "top-rated")
                 } else {
-                    addToWishlist.setImageResource(R.drawable.ic_bookmark_added)
                     isClicked = true
+                    addToWishlist.setImageResource(R.drawable.ic_bookmark_added)
+                    itemClickListener.addToWishList(results, false, "top-rated")
+
                 }
             }
             iv_movieImage.setOnClickListener {

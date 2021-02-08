@@ -15,12 +15,12 @@
         android:theme="@style/Theme.MovieStars">
         <activity
             android:name=".activities.WishListActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
 
         </activity>
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,10 +29,12 @@
         </activity>
         <activity
             android:name=".activities.MovieDetailsActivity"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
         <activity
             android:name=".activities.MainActivity"
-            android:configChanges="orientation|screenSize"></activity>
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>

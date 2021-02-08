@@ -24,7 +24,7 @@ class WishListViewHolder(private val view: View, var listener: ItemClickListener
             addToWishlist.setOnClickListener {
 
                 addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
-                itemClickListener.addToWishList(results, true)
+                itemClickListener.addToWishList(results, true, "wishlist")
 
             }
         }

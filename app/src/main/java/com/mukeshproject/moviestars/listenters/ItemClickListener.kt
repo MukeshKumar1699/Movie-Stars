@@ -7,6 +7,6 @@ interface ItemClickListener {
 
     fun onItemClicked(position: Int, results: ResultsItem)
 
-    fun addToWishList(data: Any, isAdded: Boolean)
+    fun addToWishList(data: Any, isAdded: Boolean, list: String)
 
 }

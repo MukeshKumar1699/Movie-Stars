@@ -60,7 +60,7 @@ class WishListActivity : AppCompatActivity(), ItemClickListener {
         startActivity(intent)
     }
 
-    override fun addToWishList(data: Any, isAdded: Boolean) {
+    override fun addToWishList(data: Any, isAdded: Boolean, list: String) {
         wishListViewModel.deleteFromDatabase(data as WishList)
     }
 

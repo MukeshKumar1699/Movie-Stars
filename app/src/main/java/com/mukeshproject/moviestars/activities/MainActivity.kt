@@ -61,6 +61,12 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
         setRecyclerAdapter()
         observePopularLiveData()
 
+        if (savedInstanceState != null) {
+        } else {
+            /*
+            This value will be displayed initially when the savedInstanceState is null
+             */
+        }
         Glide.with(progressMain)
             .load(R.raw.searching)
             .into(progressMain)
@@ -211,14 +217,23 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
     }
 
 
-    override fun addToWishList(data: Any, isAdded: Boolean) {
-        if (isAdded) {
-            popularViewModel.deleteFromDatabase(data as WishList, this)
-            topRatedViewModel.deleteFromDatabase(data, this)
-        } else {
-            popularViewModel.insertToDatabase(data as ResultsItem, this)
-            topRatedViewModel.insertToDatabase(data, this)
+    override fun addToWishList(data: Any, isAdded: Boolean, list: String) {
 
+        if (list == "popular") {
+            if (isAdded) {
+                popularViewModel.deleteFromDatabase(data as WishList, this)
+            } else {
+                popularViewModel.insertToDatabase(data as ResultsItem, this)
+
+            }
+        }
+        if (list == "top-rated") {
+            if (isAdded) {
+                topRatedViewModel.deleteFromDatabase(data as WishList, this)
+            } else {
+                topRatedViewModel.insertToDatabase(data as ResultsItem, this)
+
+            }
         }
 
     }

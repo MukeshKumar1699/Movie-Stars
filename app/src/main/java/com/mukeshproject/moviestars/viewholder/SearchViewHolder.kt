@@ -28,11 +28,11 @@ class SearchViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
                 if (isClicked) {
                     isClicked = false
                     addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
-                    itemClickListener.addToWishList(results, true)
+                    itemClickListener.addToWishList(results, true, "search")
                 } else {
                     isClicked = true
                     addToWishlist.setImageResource(R.drawable.ic_bookmark_added)
-                    itemClickListener.addToWishList(results, false)
+                    itemClickListener.addToWishList(results, false, "search")
 
                 }
             }
