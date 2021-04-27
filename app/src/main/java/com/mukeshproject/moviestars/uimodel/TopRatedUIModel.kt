@@ -1,4 +1,4 @@
-package com.mukeshproject.moviestars.adapter
+package com.mukeshproject.moviestars.uimodel
 
 import com.mukeshproject.moviestars.network.popular.ResultsItem
 

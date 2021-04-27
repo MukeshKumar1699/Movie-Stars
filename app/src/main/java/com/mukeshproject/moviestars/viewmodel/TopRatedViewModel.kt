@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mukeshproject.moviestars.adapter.TopRatedUIModel
 import com.mukeshproject.moviestars.database.WishList
 import com.mukeshproject.moviestars.database.WishListDatabase
 import com.mukeshproject.moviestars.network.popular.ResponseTrending
 import com.mukeshproject.moviestars.network.popular.ResultsItem
 import com.mukeshproject.moviestars.repository.TopRatedRepository
+import com.mukeshproject.moviestars.uimodel.TopRatedUIModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

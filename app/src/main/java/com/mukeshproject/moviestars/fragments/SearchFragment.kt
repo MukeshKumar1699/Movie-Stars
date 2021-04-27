@@ -16,6 +16,7 @@ import com.mukeshproject.moviestars.R
 import com.mukeshproject.moviestars.activities.MovieDetailsActivity
 import com.mukeshproject.moviestars.adapter.SearchAdapter
 import com.mukeshproject.moviestars.database.WishList
+import com.mukeshproject.moviestars.databinding.FragmentSearchBinding
 import com.mukeshproject.moviestars.listenters.ItemClickListener
 import com.mukeshproject.moviestars.network.popular.ResultsItem
 import com.mukeshproject.moviestars.uimodel.SearchUIModel
@@ -23,38 +24,27 @@ import com.mukeshproject.moviestars.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
-private lateinit var searchViewModel: SearchViewModel
-private lateinit var searchAdapter: SearchAdapter
-private val searchlist = emptyList<ResultsItem>()
-
 class SearchFragment : Fragment(), ItemClickListener {
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var searchBinding: FragmentSearchBinding
+
+    private lateinit var searchViewModel: SearchViewModel
+    private lateinit var searchAdapter: SearchAdapter
+    private val searchlist = emptyList<ResultsItem>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        searchBinding = FragmentSearchBinding.inflate(layoutInflater)
+        return searchBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sv_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        searchBinding.svSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -68,7 +58,7 @@ class SearchFragment : Fragment(), ItemClickListener {
                 Glide.with(progressSearch)
                     .load(R.raw.searching)
                     .into(progressSearch)
-                progressSearch.visibility = View.VISIBLE
+                searchBinding.progressSearch.visibility = View.VISIBLE
 
                 return false
             }
@@ -85,13 +75,10 @@ class SearchFragment : Fragment(), ItemClickListener {
 
                 is SearchUIModel.Success -> {
                     searchAdapter.updateDataList(it.SearchList)
-                    progressSearch.visibility = View.GONE
 
                 }
 
                 is SearchUIModel.Failure -> {
-                    progressSearch.visibility = View.GONE
-
                     Toast.makeText(
                         context,
                         "Error message ${it.error}",
@@ -99,6 +86,8 @@ class SearchFragment : Fragment(), ItemClickListener {
                     ).show()
                 }
             }
+            searchBinding.progressSearch.visibility = View.GONE
+
         })
     }
 
@@ -107,7 +96,7 @@ class SearchFragment : Fragment(), ItemClickListener {
         searchAdapter = SearchAdapter(searchlist, this)
         val layoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
 
-        recyclerViewSearch.apply {
+        searchBinding.recyclerViewSearch.apply {
             adapter = searchAdapter
             this.layoutManager = layoutManager
 

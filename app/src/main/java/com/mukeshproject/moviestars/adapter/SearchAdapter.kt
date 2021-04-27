@@ -3,7 +3,7 @@ package com.mukeshproject.moviestars.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mukeshproject.moviestars.R
+import com.mukeshproject.moviestars.databinding.ItemLayoutBinding
 import com.mukeshproject.moviestars.listenters.ItemClickListener
 import com.mukeshproject.moviestars.network.popular.ResultsItem
 import com.mukeshproject.moviestars.viewholder.SearchViewHolder
@@ -17,9 +17,9 @@ class SearchAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
 
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
-        return SearchViewHolder(view)
+        val itemLayoutBinding =
+            ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SearchViewHolder(itemLayoutBinding)
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {

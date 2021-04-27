@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.mukeshproject.moviestars.R
+import com.mukeshproject.moviestars.databinding.ActivityMovieDetailsBinding
 import com.mukeshproject.moviestars.uimodel.MovieMediaUIModel
 import com.mukeshproject.moviestars.viewmodel.MovieVideoViewModel
 import kotlinx.android.synthetic.main.activity_movie_details.*
@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.item_layout.view.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
+    private lateinit var movieDetailsBinding: ActivityMovieDetailsBinding
     private var movieId: Int = 0
     private var movieName = String()
     private var backDrop = String()
@@ -26,7 +27,9 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_details)
+
+        movieDetailsBinding = ActivityMovieDetailsBinding.inflate(layoutInflater)
+        setContentView(movieDetailsBinding.root)
 
         getIntentData()
 
@@ -39,22 +42,24 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun UpdateUI() {
 
-        iv_backMoviesDetails.setOnClickListener {
+        movieDetailsBinding.ivBackMoviesDetails.setOnClickListener {
 
             val intent = Intent(this@MovieDetailsActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        Glide.with(iv_backdropMovieDetails).load("https://image.tmdb.org/t/p/original/" + backDrop)
-            .into(iv_backdropMovieDetails)
+        Glide.with(movieDetailsBinding.ivBackdropMovieDetails)
+            .load("https://image.tmdb.org/t/p/original/" + backDrop)
+            .into(movieDetailsBinding.ivBackdropMovieDetails)
 
-        Glide.with(iv_posterMovieDetails).load("https://image.tmdb.org/t/p/original/" + poster)
-            .into(iv_posterMovieDetails)
+        Glide.with(movieDetailsBinding.ivPosterMovieDetails)
+            .load("https://image.tmdb.org/t/p/original/" + poster)
+            .into(movieDetailsBinding.ivPosterMovieDetails)
 
-        movieNameMovieDetails.text = movieName
-        overViewMoviesDetails.text = overview
-        btn_playTrailer.setOnClickListener {
+        movieDetailsBinding.movieNameMovieDetails.text = movieName
+        movieDetailsBinding.overViewMoviesDetails.text = overview
+        movieDetailsBinding.btnPlayTrailer.setOnClickListener {
 
             //Toast.makeText(applicationContext, URL+youtubekey, Toast.LENGTH_SHORT).show()
             startActivity(

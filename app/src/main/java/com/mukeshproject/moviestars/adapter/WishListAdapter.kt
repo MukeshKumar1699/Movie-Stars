@@ -3,8 +3,8 @@ package com.mukeshproject.moviestars.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mukeshproject.moviestars.R
 import com.mukeshproject.moviestars.database.WishList
+import com.mukeshproject.moviestars.databinding.ItemLayoutBinding
 import com.mukeshproject.moviestars.listenters.ItemClickListener
 import com.mukeshproject.moviestars.viewholder.WishListViewHolder
 
@@ -15,8 +15,9 @@ class WishListAdapter(
     RecyclerView.Adapter<WishListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
-        return WishListViewHolder(view, itemClickListener)
+        val itemLayoutBinding =
+            ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return WishListViewHolder(itemLayoutBinding)
     }
 
     override fun onBindViewHolder(holder: WishListViewHolder, position: Int) {

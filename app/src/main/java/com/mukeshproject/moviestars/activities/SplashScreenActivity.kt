@@ -8,10 +8,12 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.mukeshproject.moviestars.R
+import com.mukeshproject.moviestars.databinding.ActivitySplashScreenBinding
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 
 class SplashScreenActivity : AppCompatActivity() {
 
+    private lateinit var splashScreenBinding: ActivitySplashScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -19,7 +21,9 @@ class SplashScreenActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        setContentView(R.layout.activity_splash_screen)
+
+        splashScreenBinding = ActivitySplashScreenBinding.inflate(layoutInflater)
+        setContentView(splashScreenBinding.root)
 
         Glide.with(lottie_rocket)
             .load(R.raw.movietheatre)

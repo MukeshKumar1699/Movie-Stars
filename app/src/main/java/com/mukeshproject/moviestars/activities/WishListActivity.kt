@@ -5,10 +5,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mukeshproject.moviestars.R
 import com.mukeshproject.moviestars.adapter.WishListAdapter
 import com.mukeshproject.moviestars.database.WishList
 import com.mukeshproject.moviestars.database.WishListViewModelFactory
+import com.mukeshproject.moviestars.databinding.ActivityWishListBinding
 import com.mukeshproject.moviestars.listenters.ItemClickListener
 import com.mukeshproject.moviestars.network.popular.ResultsItem
 import com.mukeshproject.moviestars.viewmodel.WishListViewModel
@@ -16,13 +16,16 @@ import kotlinx.android.synthetic.main.activity_wish_list.*
 
 class WishListActivity : AppCompatActivity(), ItemClickListener {
 
+    private lateinit var wishListBinding: ActivityWishListBinding
     private var wishList = emptyList<WishList>()
     private lateinit var wishListAdapter: WishListAdapter
     private lateinit var wishListViewModel: WishListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_wish_list)
+
+        wishListBinding = ActivityWishListBinding.inflate(layoutInflater)
+        setContentView(wishListBinding.root)
 
         back()
         wishListViewModel = WishListViewModelFactory(this).create(WishListViewModel::class.java)
@@ -38,7 +41,7 @@ class WishListActivity : AppCompatActivity(), ItemClickListener {
 
     private fun back() {
 
-        iv_backWishlist.setOnClickListener {
+        wishListBinding.ivBackWishlist.setOnClickListener {
             val intent = Intent(this@WishListActivity, MainActivity::class.java)
             startActivity(intent)
         }
@@ -50,8 +53,8 @@ class WishListActivity : AppCompatActivity(), ItemClickListener {
         var layoutManager =
             GridLayoutManager(this@WishListActivity, 2, RecyclerView.VERTICAL, false)
 
-        recyclerViewWishList.layoutManager = layoutManager
-        recyclerViewWishList.adapter = wishListAdapter
+        wishListBinding.recyclerViewWishList.layoutManager = layoutManager
+        wishListBinding.recyclerViewWishList.adapter = wishListAdapter
     }
 
     override fun onItemClicked(position: Int, results: ResultsItem) {

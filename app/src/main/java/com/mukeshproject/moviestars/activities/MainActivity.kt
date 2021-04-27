@@ -12,18 +12,19 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mukeshproject.moviestars.R
 import com.mukeshproject.moviestars.adapter.PopularAdapter
 import com.mukeshproject.moviestars.adapter.TopRatedAdapter
-import com.mukeshproject.moviestars.adapter.TopRatedUIModel
 import com.mukeshproject.moviestars.database.WishList
+import com.mukeshproject.moviestars.databinding.ActivityMainBinding
 import com.mukeshproject.moviestars.fragments.SearchFragment
 import com.mukeshproject.moviestars.listenters.ItemClickListener
 import com.mukeshproject.moviestars.network.popular.ResultsItem
 import com.mukeshproject.moviestars.uimodel.PopularUIModel
+import com.mukeshproject.moviestars.uimodel.TopRatedUIModel
 import com.mukeshproject.moviestars.viewmodel.PopularViewModel
 import com.mukeshproject.moviestars.viewmodel.TopRatedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,6 +33,9 @@ import kotlinx.android.synthetic.main.item_layout.view.*
 
 
 class MainActivity : AppCompatActivity(), ItemClickListener {
+
+    private lateinit var mainBinding: ActivityMainBinding
+
 
     private lateinit var popularViewModel: PopularViewModel
     private lateinit var topRatedViewModel: TopRatedViewModel
@@ -45,7 +49,9 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mainBinding.root)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!checkInternet(applicationContext)) {
@@ -70,7 +76,7 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
         Glide.with(progressMain)
             .load(R.raw.searching)
             .into(progressMain)
-        progressMain.visibility = View.VISIBLE
+        mainBinding.progressMain.visibility = View.VISIBLE
         popularViewModel.callAPI()
         topRatedViewModel.callAPI()
 
@@ -125,7 +131,7 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
 
     private fun wishList() {
 
-        ib_wishList.setOnClickListener {
+        mainBinding.ibWishList.setOnClickListener {
             val intent = Intent(this@MainActivity, WishListActivity::class.java)
             startActivity(intent)
         }
@@ -134,7 +140,7 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
 
     private fun search() {
 
-        ib_search.setOnClickListener {
+        mainBinding.ibSearch.setOnClickListener {
 
             val searchFragment = SearchFragment()
 
@@ -155,27 +161,26 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
 
                 is PopularUIModel.Success -> {
                     popularAdapter.updateDataList(it.TrendingList)
-                    progressMain.visibility = View.GONE
                 }
 
                 is PopularUIModel.Failure -> {
-                    progressMain.visibility = View.GONE
                 }
+
             }
+            mainBinding.progressMain.visibility = View.GONE
         })
         topRatedViewModel.liveData.observe(this, {
             when (it) {
 
                 is TopRatedUIModel.Success -> {
-                    progressMain.visibility = View.GONE
-
                     topRatedAdapter.updateDataList(it.TopRatedList)
                 }
                 is TopRatedUIModel.Failure -> {
-                    progressMain.visibility = View.GONE
 
                 }
             }
+            mainBinding.progressMain.visibility = View.GONE
+
         })
     }
 
@@ -185,18 +190,18 @@ class MainActivity : AppCompatActivity(), ItemClickListener {
     private fun setRecyclerAdapter() {
 
         popularAdapter = PopularAdapter(popularList, this)
-        var layoutManager = GridLayoutManager(this@MainActivity, 1, RecyclerView.HORIZONTAL, false)
+        var layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
 
-        recyclerViewPopular.apply {
+        mainBinding.recyclerViewPopular.apply {
             adapter = popularAdapter
             this.layoutManager = layoutManager
 
         }
 
         topRatedAdapter = TopRatedAdapter(topRatedList, this)
-        layoutManager = GridLayoutManager(this@MainActivity, 1, RecyclerView.HORIZONTAL, false)
+        layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
 
-        recyclerViewTopRated.apply {
+        mainBinding.recyclerViewTopRated.apply {
             adapter = topRatedAdapter
             this.layoutManager = layoutManager
         }
