@@ -11,7 +11,6 @@ import com.mukeshproject.moviestars.network.popular.ResultsItem
 import com.mukeshproject.moviestars.repository.PopularRepository
 import com.mukeshproject.moviestars.uimodel.PopularUIModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -22,8 +21,9 @@ class PopularViewModel : ViewModel(), Callback<ResponseTrending> {
 
     private val repository = PopularRepository(this)
 
-    private val mutableLiveData = MutableLiveData<PopularUIModel>()
+    val scope = CoroutineScope(IO)
 
+    private val mutableLiveData = MutableLiveData<PopularUIModel>()
     val liveData: LiveData<PopularUIModel> = mutableLiveData
 
 
@@ -39,19 +39,19 @@ class PopularViewModel : ViewModel(), Callback<ResponseTrending> {
         mutableLiveData.value = PopularUIModel.Failure(t.message!!)
     }
 
-    fun callAPI() {
-        repository.getListofPopular()
+    fun callAPI(page : Int) {
+        repository.getListofPopular(page)
     }
 
     fun insertToDatabase(resultsItem: ResultsItem, context: Context) {
         val wishList = WishList(title = resultsItem.title!!, image = resultsItem.posterPath!!)
-        CoroutineScope(Dispatchers.IO).launch {
+        scope.launch {
             WishListDatabase.getInstance(context).wishListDao.insertWishList(wishList)
         }
     }
 
     fun deleteFromDatabase(wishList: WishList, context: Context) {
-        CoroutineScope(IO).launch {
+        scope.launch {
             WishListDatabase.getInstance(context).wishListDao
                 .deleleWishList(wishList)
         }

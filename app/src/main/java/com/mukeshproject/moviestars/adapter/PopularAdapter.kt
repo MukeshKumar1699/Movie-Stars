@@ -33,7 +33,7 @@ class PopularAdapter(
     }
 
     fun updateDataList(trendingList: List<ResultsItem>) {
-        this.trendingList = trendingList
+        this.trendingList += trendingList
         notifyDataSetChanged()
     }
 }

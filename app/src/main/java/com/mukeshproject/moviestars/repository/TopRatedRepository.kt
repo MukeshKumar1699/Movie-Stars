@@ -6,10 +6,10 @@ import com.mukeshproject.moviestars.viewmodel.TopRatedViewModel
 
 class TopRatedRepository(private val callback: TopRatedViewModel) {
 
-    fun getListofTopRated() {
+    fun getListofTopRated(page: Int) {
 
         val apiClient = Network.getRetrofitInstance().create(ApiClient::class.java)
-        val call = apiClient.getTopRated("f93f2306dd57a8d5c1932faa0774cd16")
+        val call = apiClient.getTopRated("f93f2306dd57a8d5c1932faa0774cd16", page)
 
         call.enqueue(callback)
     }

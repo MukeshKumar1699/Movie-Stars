@@ -8,7 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Network {
 
-
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org/"
 

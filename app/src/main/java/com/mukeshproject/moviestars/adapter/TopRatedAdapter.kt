@@ -32,7 +32,7 @@ class TopRatedAdapter(
     }
 
     fun updateDataList(searchList: List<ResultsItem>) {
-        this.topRatedList = searchList
+        this.topRatedList += searchList
         notifyDataSetChanged()
     }
 

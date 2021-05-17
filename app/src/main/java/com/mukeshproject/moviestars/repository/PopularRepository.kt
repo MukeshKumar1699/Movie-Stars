@@ -2,16 +2,31 @@ package com.mukeshproject.moviestars.repository
 
 import com.mukeshproject.moviestars.network.ApiClient
 import com.mukeshproject.moviestars.network.Network
+import com.mukeshproject.moviestars.network.popular.ResponseTrending
 import com.mukeshproject.moviestars.viewmodel.PopularViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class PopularRepository(private val callback: PopularViewModel) {
 
-    fun getListofPopular() {
+    val scope = CoroutineScope(Dispatchers.IO)
 
-        val apiClient = Network.getRetrofitInstance().create(ApiClient::class.java)
-        val call = apiClient.getPopular("f93f2306dd57a8d5c1932faa0774cd16")
+    fun getListofPopular(page: Int) {
 
-        call.enqueue(callback)
+        scope.launch  {
+
+            val apiClient = Network.getRetrofitInstance().create(ApiClient::class.java)
+            val call = apiClient.getPopular(api_key, page)
+
+            call.enqueue(callback)
+
+        }
+
+    }
+
+    companion object {
+        val api_key = "f93f2306dd57a8d5c1932faa0774cd16"
     }
 }
 

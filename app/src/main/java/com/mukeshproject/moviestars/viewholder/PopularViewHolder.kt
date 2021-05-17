@@ -16,8 +16,10 @@ class PopularViewHolder(private val view: ItemLayoutBinding) : RecyclerView.View
         view.apply {
 
             view.addToWishlist.setImageResource(R.drawable.ic_bookmark_add)
+            view.ivMovieImage.layoutParams.width = 350
+            view.ivMovieImage.layoutParams.height = 250
             Glide.with(view.ivMovieImage)
-                .load("https://image.tmdb.org/t/p/original/" + results.posterPath)
+                .load("https://image.tmdb.org/t/p/original/" + results.backdropPath)
                 .into(view.ivMovieImage)
 
             view.addToWishlist.setOnClickListener {

@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mukeshproject.moviestars.R
 import com.mukeshproject.moviestars.activities.MovieDetailsActivity
@@ -35,7 +34,7 @@ class SearchFragment : Fragment(), ItemClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         searchBinding = FragmentSearchBinding.inflate(layoutInflater)
         return searchBinding.root
@@ -44,6 +43,14 @@ class SearchFragment : Fragment(), ItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        init()
+        observeLiveData()
+
+    }
+
+    private fun init() {
+
+        searchViewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
         searchBinding.svSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
@@ -51,7 +58,6 @@ class SearchFragment : Fragment(), ItemClickListener {
 
                 return false
             }
-
             override fun onQueryTextChange(p0: String): Boolean {
 
                 searchViewModel.callAPI(p0)
@@ -63,9 +69,8 @@ class SearchFragment : Fragment(), ItemClickListener {
                 return false
             }
         })
-        searchViewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java)
+
         setRecyclerAdapter()
-        observeLiveData()
 
     }
 
@@ -94,7 +99,7 @@ class SearchFragment : Fragment(), ItemClickListener {
     private fun setRecyclerAdapter() {
 
         searchAdapter = SearchAdapter(searchlist, this)
-        val layoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
+        val layoutManager = GridLayoutManager(context, 3)
 
         searchBinding.recyclerViewSearch.apply {
             adapter = searchAdapter

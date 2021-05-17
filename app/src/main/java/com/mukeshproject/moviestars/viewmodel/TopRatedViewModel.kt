@@ -37,8 +37,8 @@ class TopRatedViewModel : ViewModel(), Callback<ResponseTrending> {
         mutableLiveData.value = TopRatedUIModel.Failure(t.message!!)
     }
 
-    fun callAPI() {
-        repository.getListofTopRated()
+    fun callAPI(page: Int) {
+        repository.getListofTopRated(page)
     }
 
     fun insertToDatabase(resultsItem: ResultsItem, context: Context) {

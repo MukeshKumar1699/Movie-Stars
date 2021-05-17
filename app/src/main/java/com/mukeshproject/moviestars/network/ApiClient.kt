@@ -10,10 +10,14 @@ import retrofit2.http.Query
 interface ApiClient {
 
     @GET("/3/movie/popular")
-    fun getPopular(@Query("api_key") key: String): Call<ResponseTrending>
+    fun getPopular(
+        @Query("api_key") key: String,
+        @Query("page") page: Int?): Call<ResponseTrending>
 
     @GET("/3/movie/top_rated")
-    fun getTopRated(@Query("api_key") key: String): Call<ResponseTrending>
+    fun getTopRated(
+        @Query("api_key") key: String,
+        @Query("page") page: Int?): Call<ResponseTrending>
 
     @GET("/3/search/movie")
     fun getSearch(

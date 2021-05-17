@@ -1,5 +1,6 @@
 package com.mukeshproject.moviestars.uimodel
 
+import com.mukeshproject.moviestars.network.popular.ResponseTrending
 import com.mukeshproject.moviestars.network.popular.ResultsItem
 
 sealed class PopularUIModel {
