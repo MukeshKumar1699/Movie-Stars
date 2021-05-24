@@ -74,8 +74,6 @@ dependencies {
 
     //airbnb
     implementation 'com.airbnb.android:lottie:3.7.0'
-    //liquid Swipe
-    implementation 'com.cuberto:liquid-swipe:1.0.0'
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
 
